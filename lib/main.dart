@@ -86,6 +86,14 @@ class _ThumbnailPageState extends State<ThumbnailPage> {
   }
 
   @override
+  void dispose() {
+    // Ensure disposing of the VideoPlayerController to free up resources.
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -166,8 +174,9 @@ class _ThumbnailPageState extends State<ThumbnailPage> {
                     width: MediaQuery.of(context).size.height / 1.5,
                     child: TextField(
                       decoration: InputDecoration(
+                          hintText: 'Select Any file type',
                           border: InputBorder.none,
-                          suffix: IconButton(
+                          suffixIcon: IconButton(
                             icon: const Icon(Icons.attach_file),
                             onPressed: () {
                               pickMedia();
@@ -189,6 +198,7 @@ class _ThumbnailPageState extends State<ThumbnailPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => VideoDetailsPage(
+                              file: file,
                               videopath2: thumbnail,
                               videoPath: FileImage(file!),
                               fileName: file?.path.split('/').last ?? ''),
